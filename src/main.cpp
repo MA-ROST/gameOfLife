@@ -4,7 +4,7 @@
 //========================================================================
 int main( ){
 	const string title               = "Game Of Life";
-	constexpr Point <int> screenSize = {600, 600};
+	constexpr Point <int> screenSize = {1000, 900};
 
 	ofGLFWWindowSettings settings;
 	settings.setSize(screenSize.x, screenSize.y);
