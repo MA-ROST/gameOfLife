@@ -2,6 +2,16 @@
 
 #include <ObjectArray.h>
 
+void GameManager::setup()
+{
+	for (auto& cellRow : cells_) {
+		for (auto& cell : cellRow) {
+			const int ran = rand() % 2;
+			cell.isLive_ = ran;
+		}
+	}
+}
+
 void GameManager::drawCells()
 {
 	for (int x = 0; x < Cell::GRID_SIZE.x; ++x) {

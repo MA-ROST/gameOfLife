@@ -9,6 +9,7 @@ class GameManager {
 
 	
 public:
+	void setup();
 	void drawCells();
 
 	void neighbourLogic(int row, int column);
