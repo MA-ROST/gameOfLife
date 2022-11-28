@@ -5,8 +5,13 @@
 #include "cell.h"
 
 class GameManager {
-	std::array <std::vector <Cell>, 11> cells_;
+	array<array<Cell, Cell::GRID_SIZE.x>, Cell::GRID_SIZE.y> cells_;
+
+	
 public:
+
+	void drawCells();
+
 	void neighbourLogic(int row, int column);
 	void checkNeighbours(int row, int column);
 	void cellFollowsRules(Cell& cell);

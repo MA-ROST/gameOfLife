@@ -2,6 +2,15 @@
 
 #include <ObjectArray.h>
 
+void GameManager::drawCells()
+{
+	for (int x = 0; x < Cell::GRID_SIZE.x; ++x) {
+		for (int y = 0; y < Cell::GRID_SIZE.y; ++y) {
+			cells_[x][y].setupPixel(x, y, false);
+		}
+	}
+}
+
 void GameManager::neighbourLogic(int row, int column)
 {
 	if (cells_[row][column].isLive_) {
