@@ -5,7 +5,7 @@
 
 class Cell {
 public:
-	bool isLive_;
+	bool isLive_ = false;
 	Point<float> pixelSize_, pixelLocation_;
 
 	enum stateColor {
@@ -19,17 +19,15 @@ public:
 	 *
 	 * @param x The x index of the vector
 	 * @param y The y index of the vector
-	 * @param isFilled determines the style of the pixel
 	 */
-	void setupPixel(const int& x, const int& y, bool isFilled);
+	void setupPixel(const int& x, const int& y);
 
 private:
 
 	/**
 	 * @brief Determines the visual look of a pixel based on a given number
-	 * @param state changes the color of a pixel between stateColors
 	 */
-	void setStyle(bool state) const;
+	void setStyle() const;
 
 	/**
 	 * @brief through the amount of pixels and size of the window,
@@ -38,5 +36,4 @@ private:
 	 * @return The calculated height and width for each pixel
 	 */
 	static Point<float> calculatePixelSize();
-	
 };

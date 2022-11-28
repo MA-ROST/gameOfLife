@@ -6,7 +6,6 @@ void GameManager::drawCells()
 {
 	for (int x = 0; x < Cell::GRID_SIZE.x; ++x) {
 		for (int y = 0; y < Cell::GRID_SIZE.y; ++y) {
-			cells_[x][y].setupPixel(x, y, false);
 		}
 	}
 }

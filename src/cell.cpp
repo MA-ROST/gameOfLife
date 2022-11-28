@@ -1,16 +1,16 @@
 ﻿#include "cell.h"
 
-void Cell::setupPixel(const int& x, const int& y, bool isFilled)
+void Cell::setupPixel(const int& x, const int& y)
 {
 	pixelSize_ = calculatePixelSize();
-	setStyle(isFilled);
+	setStyle();
 	ofDrawRectangle(pixelSize_.x * x, pixelSize_.y * y, pixelSize_.x, pixelSize_.y);
 }
 
-void Cell::setStyle(bool state) const
+void Cell::setStyle() const
 {
 	ofFill();
-	switch (state) {
+	switch (isLive_) {
 	case true:
 		ofSetColor(active);
 		break;
