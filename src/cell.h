@@ -12,7 +12,7 @@ public:
 		inactive = 150,
 		active = 0
 	};
-	static constexpr Point<int> GRID_SIZE{ 24,24 };
+	static constexpr Point<int> GRID_SIZE{ 30, 30 };
 
 	/**
 	 * @brief sets up the pixel for drawing, and then draws it

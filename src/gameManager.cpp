@@ -16,18 +16,15 @@ void GameManager::drawCells()
 {
 	for (int x = 0; x < Cell::GRID_SIZE.x; ++x) {
 		for (int y = 0; y < Cell::GRID_SIZE.y; ++y) {
+			cells_[x][y].setupPixel(x, y);
+			cellFollowsRules(x, y);
 		}
 	}
 }
 
 void GameManager::neighbourLogic(int row, int column)
 {
-	if (cells_[row][column].isLive_) {
-		checkNeighbours(row, column);
-	}
-	else {
-		checkNeighbours(row, column);
-	}
+	checkNeighbours(row, column);
 }
 
 void GameManager::checkNeighbours(int row, int column)
@@ -53,15 +50,32 @@ void GameManager::checkNeighbours(int row, int column)
 
 void GameManager::cellFollowsRules(const int row, const int col)
 {
-	int r = row;
-	int c = col;
-	int count = 0;
-	r = row - 1;
+	const int r = row - 1;
+	const int c = col;
 	if (rowInBound (r)) {
 		isInBounds(col - 1); // Check spot #1
 		isInBounds(col);     // Check spot #2
 		isInBounds(col + 1); // Check spot #3
 	}
+
+	if (cellInBound (r, c)) {
+		int count = countLiveNeighbours(r, c);
+		
+		if (cells_[r][c].isLive_) {
+			// 1. Any live cell with fewer than two live neighbours dies, as if by underpopulation.
+			// 2. Any live cell with two or three live neighbours lives on to the next generation.
+			// 3. Any live cell with more than three live neighbours dies, as if by overpopulation.
+			if (count < 2 || count > 3) {
+				cells_[r][c].isLive_ = false;
+			}
+		}
+		else {
+			// 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+			if (count == 3) cells_[r][c].isLive_ = true;
+		}
+	}
+}
+
 bool GameManager::isCellLive(const int row, const int column)
 {
 	if (cellInBound (row, column) && cells_[row][column].isLive_) { return true; }
@@ -107,10 +121,6 @@ bool GameManager::cellInBound(int row, int col)
 
 bool GameManager::isInBounds(const int col)
 {
-	if (colInBound(col))
-	{
-		std::cout << col << " is valid\n";
-		return true;
-	}
+	if (colInBound(col)) return true;
 	return false;
 }
