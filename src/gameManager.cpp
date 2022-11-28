@@ -62,6 +62,27 @@ void GameManager::cellFollowsRules(const int row, const int col)
 		isInBounds(col);     // Check spot #2
 		isInBounds(col + 1); // Check spot #3
 	}
+bool GameManager::isCellLive(const int row, const int column)
+{
+	if (cellInBound (row, column) && cells_[row][column].isLive_) { return true; }
+	return false;
+}
+
+int GameManager::countLiveNeighbours(const int row, const int column)
+{
+	int count = 0;
+	if (isCellLive(row - 1, column - 1)) count++;
+	if (isCellLive(row - 1, column)) count++;
+	if (isCellLive(row - 1, column + 1)) count++;
+	if (isCellLive(row, column - 1)) count++;
+	// DO NOT CHECK THE SAME SPOT WE ARE ON (row,column) ....
+	if (isCellLive(row, column + 1)) count++;
+	if (isCellLive(row + 1, column - 1)) count++;
+	if (isCellLive(row + 1, column)) count++;
+	if (isCellLive(row + 1, column - 1)) count++;
+
+	return count;
+
 }
 
 bool GameManager::rowInBound(int row)
