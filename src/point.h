@@ -72,6 +72,16 @@ struct Rect {
 		ofDrawCircle(x, y, radius);
 	}
 
+	bool checkBounds(T xOut, T yOut)
+	{
+		if (xOut > x && xOut < addXW() && 
+			yOut > y && yOut < addYH()) 
+		{
+			return true;
+		}
+		return false;
+	}
+
 	bool checkBounds(Rect<T>& rect)
 	{
 		if (x >= rect.x && addXW() < rect.addXW()) {
