@@ -28,6 +28,7 @@ void ofApp::keyReleased(int key){
     if (key == 32) {
         manager.pause();
     }
+    if (key == 13)manager.randomizeGrid();
 }
 
 //--------------------------------------------------------------

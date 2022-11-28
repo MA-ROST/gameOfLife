@@ -41,7 +41,7 @@ void GameManager::drawCells()
 			}
 		}
 	}
-
+	cout << "fin \n";
 	
 }
 
@@ -59,12 +59,12 @@ void GameManager::cellFollowsRules(const int row, const int col)
 			// 2. Any live cell with two or three live neighbours lives on to the next generation.
 			// 3. Any live cell with more than three live neighbours dies, as if by overpopulation.
 			if (count == 0 || count < 2 || count > 3) {
-				cells_[r][c].isLive_ = false;
+				cells_[r][c].isLive_ = false; // Change to mark for change
 			}
 		}
 		else {
 			// 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-			if (count == 3) cells_[r][c].isLive_ = true;
+			if (count == 3) cells_[r][c].isLive_ = true; // Change to mark for change
 		}
 	}
 }
@@ -83,7 +83,7 @@ int GameManager::countLiveNeighbours(const int row, const int column)
 	count += isCellLive(row - 1, column);
 	count += isCellLive(row - 1, column + 1);
 
-	count += isCellLive(row, column - 1);
+	count += isCellLive(row, column - 1); //**
 	// DO NOT CHECK THE SAME SPOT WE ARE ON (row,column) ....
 	count += isCellLive(row, column + 1);
 

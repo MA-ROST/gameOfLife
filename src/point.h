@@ -74,8 +74,8 @@ struct Rect {
 
 	bool checkBounds(T xOut, T yOut)
 	{
-		if (xOut > x && xOut < addXW() && 
-			yOut > y && yOut < addYH()) 
+		if (xOut >= x && xOut <= addXW() && 
+			yOut >= y && yOut <= addYH()) 
 		{
 			return true;
 		}
