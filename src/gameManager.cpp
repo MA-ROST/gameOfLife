@@ -50,3 +50,46 @@ void GameManager::cellFollowsRules(Cell& cell)
 	// 3. Any live cell with more than three live neighbours dies, as if by overpopulation.
 	// 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 }
+
+void GameManager::cellFollowsRules(const int row, const int col)
+{
+	int r = row;
+	int c = col;
+	int count = 0;
+	r = row - 1;
+	if (rowInBound (r)) {
+		isInBounds(col - 1); // Check spot #1
+		isInBounds(col);     // Check spot #2
+		isInBounds(col + 1); // Check spot #3
+	}
+}
+
+bool GameManager::rowInBound(int row)
+{
+	if (row < 0)    return false;               // Before first row
+	if (row >= Cell::GRID_SIZE.x) return false; // After last row
+	return true;                                // Valid row
+}
+
+bool GameManager::colInBound(int col)
+{
+	if (col < 0) return false;					// Before first column
+	if (col >= Cell::GRID_SIZE.y) return false; // After last column
+	return true;                                // Valid row
+}
+
+bool GameManager::cellInBound(int row, int col)
+{
+	if (rowInBound(row) && colInBound(col)) return true;
+	return false;
+}
+
+bool GameManager::isInBounds(const int col)
+{
+	if (colInBound(col))
+	{
+		std::cout << col << " is valid\n";
+		return true;
+	}
+	return false;
+}
