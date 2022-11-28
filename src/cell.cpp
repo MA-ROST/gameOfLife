@@ -4,7 +4,19 @@ void Cell::setupPixel(const int& x, const int& y)
 {
 	pixelSize_ = calculatePixelSize();
 	setStyle();
-	ofDrawRectangle(pixelSize_.x * x, pixelSize_.y * y, pixelSize_.x, pixelSize_.y);
+	collider_ = { pixelSize_.x * x, pixelSize_.y * y, pixelSize_.x, pixelSize_.y};
+	collider_.drawRect();
+}
+
+void Cell::drawNeighbours()
+{
+	ofSetColor(ofColor::red);
+	ofDrawBitmapString(count_, collider_.x, collider_.addYH());
+}
+
+bool Cell::wasClickInside(int x, int y)
+{
+	return collider_.checkBounds(static_cast<float>(x),static_cast<float>(y));
 }
 
 void Cell::setStyle() const
@@ -20,7 +32,11 @@ void Cell::setStyle() const
 		break;
 	}
 
+	if (testing_) ofSetColor(ofColor::red, 50);
+	
 }
+
+
 
 Point<float> Cell::calculatePixelSize()
 {

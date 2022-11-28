@@ -6,13 +6,17 @@
 class Cell {
 public:
 	bool isLive_ = false;
+	bool testing_ = false;
 	Point<float> pixelSize_, pixelLocation_;
+	Rect<float> collider_;
+
+	int count_ = 0;
 
 	enum stateColor {
 		inactive = 150,
 		active = 0
 	};
-	static constexpr Point<int> GRID_SIZE{ 48, 48 };
+	static constexpr Point<int> GRID_SIZE{ 20, 20 };
 
 	/**
 	 * @brief sets up the pixel for drawing, and then draws it
@@ -21,6 +25,9 @@ public:
 	 * @param y The y index of the vector
 	 */
 	void setupPixel(const int& x, const int& y);
+	void drawNeighbours();
+
+	bool wasClickInside(int x, int y);
 
 private:
 
