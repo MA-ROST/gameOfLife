@@ -13,7 +13,6 @@ public:
 
 	void neighbourLogic(int row, int column);
 	void checkNeighbours(int row, int column);
-	void cellFollowsRules(Cell& cell);
 	void cellFollowsRules(int row, int col);
 	int countLiveNeighbours(int row, int column);
 	bool isCellLive(int row, int column);

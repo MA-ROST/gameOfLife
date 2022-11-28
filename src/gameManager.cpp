@@ -30,24 +30,15 @@ void GameManager::checkNeighbours(int row, int column)
 	// +---+---+---+    +---------+---------+---------+
 	// | 6 | 7 | 8 |    | r+1,c-1 | r+1,c   | r+1,c+1 |
 	// +---+---+---+    +---------+---------+---------+
-	cellFollowsRules(cells_[row - 1][column - 1]);
-	cellFollowsRules(cells_[row - 1][column]);
-	cellFollowsRules(cells_[row - 1][column + 1]);
-	cellFollowsRules(cells_[row][column - 1]);
+	cellFollowsRules(row - 1, column - 1);
+	cellFollowsRules(row - 1, column);
+	cellFollowsRules(row - 1, column + 1);
+	cellFollowsRules(row,	  column - 1);
 	// DO NOT CHECK THE SAME SPOT WE ARE ON (row,column) ....
-	cellFollowsRules(cells_[row][column + 1]);
-	cellFollowsRules(cells_[row + 1][column - 1]);
-	cellFollowsRules(cells_[row + 1][column]);
-	cellFollowsRules(cells_[row + 1][column - 1]);
-}
-
-void GameManager::cellFollowsRules(Cell& cell)
-{
-	// 1. Any live cell with fewer than two live neighbours dies, as if by underpopulation.
-
-	// 2. Any live cell with two or three live neighbours lives on to the next generation.
-	// 3. Any live cell with more than three live neighbours dies, as if by overpopulation.
-	// 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+	cellFollowsRules(row,	  column + 1);
+	cellFollowsRules(row + 1, column - 1);
+	cellFollowsRules(row + 1, column);
+	cellFollowsRules(row + 1, column - 1);
 }
 
 void GameManager::cellFollowsRules(const int row, const int col)
