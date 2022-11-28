@@ -6,13 +6,15 @@
 
 class GameManager {
 	array<array<Cell, Cell::GRID_SIZE.x>, Cell::GRID_SIZE.y> cells_;
+
+	bool isInPlay_ = true;
 	
 public:
 	void setup();
+	void pause();
+	void showNeighbours(int x, int y);
+	
 	void drawCells();
-
-	void neighbourLogic(int row, int column);
-	void checkNeighbours(int row, int column);
 	void cellFollowsRules(int row, int col);
 	int countLiveNeighbours(int row, int column);
 	bool isCellLive(int row, int column);
@@ -21,5 +23,12 @@ public:
 	bool colInBound(int col);
 	bool isInBounds(int col);
 	bool cellInBound(int row, int col);
+
+	void randomizeGrid();
+
+	void mouseDragged(int x, int y, int button);
+	Point<int> getClicked(int x, int y);
 	
 };
+
+
