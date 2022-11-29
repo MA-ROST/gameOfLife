@@ -2,9 +2,9 @@
 
 void Cell::setupPixel(const int& x, const int& y)
 {
-	pixelSize_ = calculatePixelSize();
+	Point<float> pixelSize = calculatePixelSize();
 	setStyle();
-	collider_ = { pixelSize_.x * x, pixelSize_.y * y, pixelSize_.x, pixelSize_.y};
+	collider_ = { pixelSize.x * x, pixelSize.y * y, pixelSize.x, pixelSize.y};
 	collider_.drawRect();
 }
 
