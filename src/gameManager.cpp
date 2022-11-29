@@ -25,7 +25,7 @@ void GameManager::drawCells()
 		}
 	}
 	updateCells();
-	
+
 }
 
 void GameManager::updateCells()
@@ -44,10 +44,10 @@ void GameManager::cellFollowsRules(const int row, const int col)
 	const int r = row;
 	const int c = col;
 
-	if (cellInBound (r, c)) {
+	if (cellInBound(r, c)) {
 		int count = countLiveNeighbours(r, c);
 		cells_[r][c].count_ = count;
-		
+
 		if (cells_[r][c].isLive_) {
 			// 1. Any live cell with fewer than two live neighbours dies, as if by underpopulation.
 			// 2. Any live cell with two or three live neighbours lives on to the next generation.
@@ -63,29 +63,29 @@ void GameManager::cellFollowsRules(const int row, const int col)
 	}
 }
 
-bool GameManager::isCellLive(const int row, const int column)
+bool GameManager::isCellLive(const int row, const int col)
 {
-	if (cellInBound (row, column) && cells_[row][column].isLive_)  return true; 
+	if (cellInBound(row, col) && cells_[row][col].isLive_)  return true;
 	return false;
 }
 
-int GameManager::countLiveNeighbours(const int row, const int column)
+int GameManager::countLiveNeighbours(const int row, const int col)
 {
 	int count = 0;
 
-	count += isCellLive(row - 1, column - 1);
-	count += isCellLive(row - 1, column);
-	count += isCellLive(row - 1, column + 1);
+	count += isCellLive(row - 1, col - 1);
+	count += isCellLive(row - 1, col);
+	count += isCellLive(row - 1, col + 1);
 
-	count += isCellLive(row, column - 1); //**
+	count += isCellLive(row, col - 1); //**
 	// DO NOT CHECK THE SAME SPOT WE ARE ON (row,column) ....
-	count += isCellLive(row, column + 1);
+	count += isCellLive(row, col + 1);
 
-	count += isCellLive(row + 1, column - 1);
-	count += isCellLive(row + 1, column);
-	count += isCellLive(row + 1, column + 1);
+	count += isCellLive(row + 1, col - 1);
+	count += isCellLive(row + 1, col);
+	count += isCellLive(row + 1, col + 1);
 
-	//std::cout << row << " " << column << " has " << count << "/7 live neighbours\n";
+	//std::cout << row << " " << col << " has " << count << "/7 live neighbours\n";
 	return count;
 }
 
@@ -109,37 +109,35 @@ bool GameManager::cellInBound(int row, int col)
 	return false;
 }
 
-bool GameManager::isInBounds(const int col)
+void GameManager::mouseDragged(int x, int y)
 {
-	if (colInBound(col)) return true;
-	return false;
+	Point<int> mouseCoord = getClicked(x, y);
+
+	if (cellInBound(mouseCoord.x, mouseCoord.y))
+	{
+		cells_[mouseCoord.x][mouseCoord.y].isLive_ = true;
+	}
+
+}
+
+Point<int> GameManager::getClicked(int x, int y)
+{
+	for (int a = 0; a < Cell::GRID_SIZE; ++a) {
+		for (int b = 0; b < Cell::GRID_SIZE; ++b) {
+			if (cells_[a][b].wasClickInside(x, y)) {
+				return { a,b };
+			}
+		}
+	}
 }
 
 void GameManager::randomizeGrid()
 {
 	for (auto& cellRow : cells_) {
 		for (auto& cell : cellRow) {
+			// Randomly get 0 or 1
 			const int ran = rand() % 2;
 			cell.isLive_ = ran;
-		}
-	}
-}
-
-void GameManager::mouseDragged(int x, int y, int button)
-{
-	Point<int> mouseCoord = getClicked(x,y);
-
-	cells_[mouseCoord.x][mouseCoord.y].isLive_ = true;
-}
-
-Point<int> GameManager::getClicked(int x, int y)
-{
-
-	for (int a = 0; a < Cell::GRID_SIZE; ++a) {
-		for (int b = 0; b < Cell::GRID_SIZE; ++b) {
-			if (cells_[a][b].wasClickInside(x, y)) {
-				return { a,b };
-			}
 		}
 	}
 }
