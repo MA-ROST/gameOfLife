@@ -4,6 +4,7 @@
 
 void GameManager::setup()
 {
+	font_.load("arial.ttf", 32);
 	randomizeGrid();
 }
 
@@ -11,6 +12,20 @@ void GameManager::pause()
 {
 	isInPlay_ = isInPlay_ ? false : true;
 }
+
+void GameManager::draw()
+{
+	drawCells();
+	if (!isInPlay_) {
+		ofFill();
+		ofSetColor(ofColor::black, 100);
+		ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+		ofSetColor(ofColor::red);
+		ofDrawBitmapString("PAUSED", 100, 100);
+		font_.drawString("PAUSED", 200, 200);
+	}
+}
+
 
 void GameManager::drawCells()
 {

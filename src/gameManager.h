@@ -6,10 +6,11 @@
 
 class GameManager {
 	array<array<Cell, Cell::GRID_SIZE>, Cell::GRID_SIZE> cells_;
+	ofTrueTypeFont font_;
 
 	int updateInterval_ = 15;
 	int generation_     = 0;
-	bool isInPlay_      = true;
+	bool isInPlay_      = false;
 
 public:
 	void setup();
@@ -17,6 +18,8 @@ public:
 	 * @brief Pause the game, but still allow the player to interact
 	 */
 	void pause();
+
+	void draw();
 
 	/**
 	 * @brief Draw each cell, every 4th frame should run cellFollowsRules();
