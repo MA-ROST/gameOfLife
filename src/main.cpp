@@ -11,7 +11,7 @@ int main( ){
 	settings.title = title;
 	settings.resizable = false;
 	ofCreateWindow(settings);
-	//ofSetFrameRate(12);
+	ofSetFrameRate(60);
 	ofSetWindowTitle(title); // Set the window title
 
 

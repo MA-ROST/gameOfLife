@@ -7,7 +7,9 @@
 class GameManager {
 	array<array<Cell, Cell::GRID_SIZE>, Cell::GRID_SIZE> cells_;
 
-	bool isInPlay_ = true;
+	int updateInterval_ = 15;
+	int generation_     = 0;
+	bool isInPlay_      = true;
 
 public:
 	void setup();
@@ -41,7 +43,7 @@ public:
 	 * @brief Checks the array to make sure that a given object is valid, halting OOB errors
 	 * @param row the 1st index of cells_
 	 * @param col the 2nd index of cells_
-	 * @return
+	 * @return returns true if the cell is in bounds and live
 	 */
 	bool isCellLive(int row, int col);
 

@@ -25,10 +25,8 @@ void ofApp::keyPressed(int key) {
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
     cout << key << "\n";
-    if (key == 32) {
-        manager.pause();
-    }
-    if (key == 13)manager.randomizeGrid();
+    if (key == 32) manager.pause();
+    if (key == 13) manager.randomizeGrid();
 }
 
 //--------------------------------------------------------------

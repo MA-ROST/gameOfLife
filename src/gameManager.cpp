@@ -9,8 +9,7 @@ void GameManager::setup()
 
 void GameManager::pause()
 {
-	if (isInPlay_) isInPlay_ = false;
-	else isInPlay_ = true;
+	isInPlay_ = isInPlay_ ? false : true;
 }
 
 void GameManager::drawCells()
@@ -18,14 +17,18 @@ void GameManager::drawCells()
 	for (int x = 0; x < Cell::GRID_SIZE; ++x) {
 		for (int y = 0; y < Cell::GRID_SIZE; ++y) {
 			cells_[x][y].setupPixel(x, y);
-			cells_[x][y].drawNeighbours();
-			if (ofGetFrameNum() % 4 == 0 && isInPlay_) {
+			if (ofGetFrameNum() % updateInterval_ == 0 && isInPlay_) {
 				cellFollowsRules(x, y);
 			}
 		}
 	}
-	updateCells();
 
+	ofSetColor(ofColor::red);
+	ofDrawBitmapString("Generation: " + std::to_string(generation_), 0, 100);
+
+	if (ofGetFrameNum() % updateInterval_ == 0 && isInPlay_) {
+		updateCells();
+	}
 }
 
 void GameManager::updateCells()
@@ -37,6 +40,8 @@ void GameManager::updateCells()
 			}
 		}
 	}
+
+	generation_++;
 }
 
 void GameManager::cellFollowsRules(const int row, const int col)
@@ -45,7 +50,7 @@ void GameManager::cellFollowsRules(const int row, const int col)
 	const int c = col;
 
 	if (cellInBound(r, c)) {
-		int count = countLiveNeighbours(r, c);
+		const int count = countLiveNeighbours(r, c);
 		cells_[r][c].count_ = count;
 
 		if (cells_[r][c].isLive_) {
@@ -76,42 +81,39 @@ int GameManager::countLiveNeighbours(const int row, const int col)
 	count += isCellLive(row - 1, col - 1);
 	count += isCellLive(row - 1, col);
 	count += isCellLive(row - 1, col + 1);
-
 	count += isCellLive(row, col - 1); //**
 	// DO NOT CHECK THE SAME SPOT WE ARE ON (row,column) ....
 	count += isCellLive(row, col + 1);
-
 	count += isCellLive(row + 1, col - 1);
 	count += isCellLive(row + 1, col);
 	count += isCellLive(row + 1, col + 1);
-
-	//std::cout << row << " " << col << " has " << count << "/7 live neighbours\n";
+	
 	return count;
 }
 
-bool GameManager::rowInBound(int row)
+bool GameManager::rowInBound(const int row)
 {
-	if (row < 0)    return false;               // Before first row
-	if (row >= Cell::GRID_SIZE) return false; // After last row
-	return true;                                // Valid row
+	if (row < 0) return false;					// Before first row
+	if (row >= Cell::GRID_SIZE) return false;	// After last row
+	return true; // Valid row
 }
 
-bool GameManager::colInBound(int col)
+bool GameManager::colInBound(const int col)
 {
 	if (col < 0) return false;					// Before first column
-	if (col >= Cell::GRID_SIZE) return false; // After last column
+	if (col >= Cell::GRID_SIZE) return false;   // After last column
 	return true;                                // Valid row
 }
 
-bool GameManager::cellInBound(int row, int col)
+bool GameManager::cellInBound(const int row, const int col)
 {
 	if (rowInBound(row) && colInBound(col)) return true;
 	return false;
 }
 
-void GameManager::mouseDragged(int x, int y)
+void GameManager::mouseDragged(const int x, const int y)
 {
-	Point<int> mouseCoord = getClicked(x, y);
+	const Point<int> mouseCoord = getClicked(x, y);
 
 	if (cellInBound(mouseCoord.x, mouseCoord.y))
 	{
@@ -120,7 +122,7 @@ void GameManager::mouseDragged(int x, int y)
 
 }
 
-Point<int> GameManager::getClicked(int x, int y)
+Point<int> GameManager::getClicked(const int x, const int y)
 {
 	for (int a = 0; a < Cell::GRID_SIZE; ++a) {
 		for (int b = 0; b < Cell::GRID_SIZE; ++b) {

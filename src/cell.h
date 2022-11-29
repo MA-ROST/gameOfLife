@@ -5,7 +5,7 @@
 
 class Cell {
 public:
-	bool isLive_, markedForUpdate_;
+	bool isLive_ {false}, markedForUpdate_ {false};
 	Rect<float> collider_;
 	int count_ = 0;
 
@@ -23,7 +23,7 @@ public:
 	 * @param y The y index of the vector
 	 */
 	void setupPixel(const int& x, const int& y);
-	void drawNeighbours(); // DEBUG
+	
 	/**
 	 * @brief toggles the status of isLive_ based on if markedForUpdate_ is true
 	 */
