@@ -7,6 +7,7 @@ class Cell {
 public:
 	bool isLive_ = false;
 	bool testing_ = false;
+	bool markedForUpdate_ = false;
 	Point<float> pixelSize_, pixelLocation_;
 	Rect<float> collider_;
 
@@ -27,6 +28,7 @@ public:
 	 */
 	void setupPixel(const int& x, const int& y);
 	void drawNeighbours();
+	void updateCell();
 
 	bool wasClickInside(int x, int y);
 

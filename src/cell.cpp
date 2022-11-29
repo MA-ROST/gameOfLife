@@ -14,6 +14,14 @@ void Cell::drawNeighbours()
 	ofDrawBitmapString(count_, collider_.x, collider_.addYH());
 }
 
+void Cell::updateCell()
+{
+	if (markedForUpdate_) {
+		isLive_          = isLive_ ? false : true;
+		markedForUpdate_ = false;
+	}
+}
+
 bool Cell::wasClickInside(int x, int y)
 {
 	return collider_.checkBounds(static_cast<float>(x),static_cast<float>(y));

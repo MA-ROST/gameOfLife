@@ -15,6 +15,7 @@ public:
 	void showNeighbours(int x, int y);
 	
 	void drawCells();
+	void updateCells(); // Update the cells after all are checked
 	void cellFollowsRules(int row, int col);
 	int countLiveNeighbours(int row, int column);
 	bool isCellLive(int row, int column);
