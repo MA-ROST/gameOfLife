@@ -5,7 +5,7 @@
 #include "cell.h"
 
 class GameManager {
-	array<array<Cell, Cell::GRID_SIZE.x>, Cell::GRID_SIZE.y> cells_;
+	array<array<Cell, Cell::GRID_SIZE>, Cell::GRID_SIZE> cells_;
 
 	bool isInPlay_ = true;
 	

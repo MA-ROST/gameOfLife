@@ -32,8 +32,8 @@ void GameManager::showNeighbours(int x, int y)
 
 void GameManager::drawCells()
 {
-	for (int x = 0; x < Cell::GRID_SIZE.x; ++x) {
-		for (int y = 0; y < Cell::GRID_SIZE.y; ++y) {
+	for (int x = 0; x < Cell::GRID_SIZE; ++x) {
+		for (int y = 0; y < Cell::GRID_SIZE; ++y) {
 			cells_[x][y].setupPixel(x, y);
 			cells_[x][y].drawNeighbours();
 			if (ofGetFrameNum() % 4 == 0 && isInPlay_) {
@@ -98,14 +98,14 @@ int GameManager::countLiveNeighbours(const int row, const int column)
 bool GameManager::rowInBound(int row)
 {
 	if (row < 0)    return false;               // Before first row
-	if (row >= Cell::GRID_SIZE.x) return false; // After last row
+	if (row >= Cell::GRID_SIZE) return false; // After last row
 	return true;                                // Valid row
 }
 
 bool GameManager::colInBound(int col)
 {
 	if (col < 0) return false;					// Before first column
-	if (col >= Cell::GRID_SIZE.y) return false; // After last column
+	if (col >= Cell::GRID_SIZE) return false; // After last column
 	return true;                                // Valid row
 }
 
@@ -141,8 +141,8 @@ void GameManager::mouseDragged(int x, int y, int button)
 Point<int> GameManager::getClicked(int x, int y)
 {
 
-	for (int a = 0; a < Cell::GRID_SIZE.x; ++a) {
-		for (int b = 0; b < Cell::GRID_SIZE.y; ++b) {
+	for (int a = 0; a < Cell::GRID_SIZE; ++a) {
+		for (int b = 0; b < Cell::GRID_SIZE; ++b) {
 			if (cells_[a][b].wasClickInside(x, y)) {
 				return { a,b };
 			}

@@ -41,8 +41,8 @@ void Cell::setStyle() const
 Point<float> Cell::calculatePixelSize()
 {
 	Point <float> output{
-		static_cast <float> (ofGetWidth()) / GRID_SIZE.x,
-		static_cast <float> (ofGetHeight()) / GRID_SIZE.y
+		static_cast <float> (ofGetWidth()) / GRID_SIZE,
+		static_cast <float> (ofGetHeight()) / GRID_SIZE
 	};
 
 	return output;
