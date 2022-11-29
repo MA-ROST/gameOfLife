@@ -4,17 +4,14 @@
 
 void GameManager::setup()
 {
-	
-
 	setupGui();
-	
 	randomizeGrid();
 }
 
 void GameManager::setupGui()
 {
 	settingPnl_.setup();
-	settingPnl_.add(pauseBtn_.setup("Pause", true));
+	settingPnl_.add(menuPauseBtn_.setup("Pause", true));
 	settingPnl_.add(randomize_.setup("Randomize Grid"));
 	settingPnl_.add(clear_.setup("Clear Grid"));
 	settingPnl_.add(genLbl_.setup(std::to_string(generation_)));
@@ -34,13 +31,10 @@ void GameManager::draw()
 {
 	drawCells();
 	settingPnl_.draw();
-	if (pauseBtn_) {
+	if (menuPauseBtn_) {
 		ofFill();
 		ofSetColor(ofColor::black, 100);
 		ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-		ofSetColor(ofColor::red);
-		ofDrawBitmapString("PAUSED", 100, 100);
-		font_.drawString("PAUSED", 200, 200);
 	}
 }
 
@@ -50,14 +44,14 @@ void GameManager::drawCells()
 	for (int x = 0; x < Cell::GRID_SIZE; ++x) {
 		for (int y = 0; y < Cell::GRID_SIZE; ++y) {
 			cells_[x][y].setupPixel(x, y);
-			if (ofGetFrameNum() % updateInterval_ == 0 && !pauseBtn_) {
+			if (ofGetFrameNum() % updateInterval_ == 0 && !isPaused_) {
 				cellFollowsRules(x, y);
 			}
 		}
 	}
 	genLbl_.setup(std::to_string(generation_));
 
-	if (ofGetFrameNum() % updateInterval_ == 0 && !pauseBtn_) {
+	if (ofGetFrameNum() % updateInterval_ == 0 && !isPaused_) {
 		updateCells();
 	}
 }
@@ -145,12 +139,18 @@ bool GameManager::cellInBound(const int row, const int col)
 void GameManager::mouseDragged(const int x, const int y)
 {
 	const Point<int> mouseCoord = getClicked(x, y);
+	isPaused_ = true;
 
 	if (cellInBound(mouseCoord.x, mouseCoord.y))
 	{
 		cells_[mouseCoord.x][mouseCoord.y].isLive_ = true;
 	}
 
+}
+
+void GameManager::mouseReleased()
+{
+	isPaused_ = false;
 }
 
 Point<int> GameManager::getClicked(const int x, const int y)
@@ -182,9 +182,4 @@ void GameManager::clearGrid()
 			cell.isLive_ = false;
 		}
 	}
-}
-
-void GameManager::pauseBtnChanged()
-{
-	isPaused_ = pauseBtn_;
 }

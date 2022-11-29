@@ -11,9 +11,9 @@ class GameManager {
 
 	int updateInterval_ = 15;
 	int generation_     = 0;
-	bool isPaused_      = false;
+	bool isPaused_     = true;
 
-	ofxToggle pauseBtn_;
+	ofxToggle menuPauseBtn_;
 	ofxButton randomize_;
 	ofxButton clear_;
 	ofxLabel genLbl_;
@@ -85,6 +85,7 @@ public:
 	 * @param y Where the mouse was clicked on a vertical axis
 	 */
 	void mouseDragged(int x, int y);
+	void mouseReleased();
 	/**
 	 * @brief Determine what cell was clicked
 	 * @param x Where the mouse was clicked on a horizontal axis
@@ -98,7 +99,5 @@ public:
 	 */
 	void randomizeGrid();
 	void clearGrid();
-
-	void pauseBtnChanged();
 };
 
