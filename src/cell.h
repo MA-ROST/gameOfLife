@@ -7,7 +7,6 @@ class Cell {
 public:
 	bool isLive_ = false;
 	bool markedForUpdate_ = false;
-	Point<float> pixelSize_, pixelLocation_;
 	Rect<float> collider_;
 
 	int count_ = 0;
