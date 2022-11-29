@@ -4,19 +4,37 @@
 
 void GameManager::setup()
 {
-	font_.load("arial.ttf", 32);
+	
+
+	setupGui();
+	
 	randomizeGrid();
+}
+
+void GameManager::setupGui()
+{
+	settingPnl_.setup();
+	settingPnl_.add(pauseBtn_.setup("Pause", true));
+	settingPnl_.add(randomize_.setup("Randomize Grid"));
+	settingPnl_.add(clear_.setup("Clear Grid"));
+	settingPnl_.add(genLbl_.setup(std::to_string(generation_)));
+
+	randomize_.addListener(this, &GameManager::randomizeGrid);
+	clear_.addListener(this, &GameManager::clearGrid);
+
+	font_.load("arial.ttf", 32);
 }
 
 void GameManager::pause()
 {
-	isInPlay_ = isInPlay_ ? false : true;
+	isPaused_ = isPaused_ ? false : true;
 }
 
 void GameManager::draw()
 {
 	drawCells();
-	if (!isInPlay_) {
+	settingPnl_.draw();
+	if (pauseBtn_) {
 		ofFill();
 		ofSetColor(ofColor::black, 100);
 		ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
@@ -32,16 +50,14 @@ void GameManager::drawCells()
 	for (int x = 0; x < Cell::GRID_SIZE; ++x) {
 		for (int y = 0; y < Cell::GRID_SIZE; ++y) {
 			cells_[x][y].setupPixel(x, y);
-			if (ofGetFrameNum() % updateInterval_ == 0 && isInPlay_) {
+			if (ofGetFrameNum() % updateInterval_ == 0 && !pauseBtn_) {
 				cellFollowsRules(x, y);
 			}
 		}
 	}
+	genLbl_.setup(std::to_string(generation_));
 
-	ofSetColor(ofColor::red);
-	ofDrawBitmapString("Generation: " + std::to_string(generation_), 0, 100);
-
-	if (ofGetFrameNum() % updateInterval_ == 0 && isInPlay_) {
+	if (ofGetFrameNum() % updateInterval_ == 0 && !pauseBtn_) {
 		updateCells();
 	}
 }
@@ -157,4 +173,18 @@ void GameManager::randomizeGrid()
 			cell.isLive_ = ran;
 		}
 	}
+}
+
+void GameManager::clearGrid()
+{
+	for (auto& cellRow : cells_) {
+		for (auto& cell : cellRow) {
+			cell.isLive_ = false;
+		}
+	}
+}
+
+void GameManager::pauseBtnChanged()
+{
+	isPaused_ = pauseBtn_;
 }

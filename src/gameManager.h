@@ -2,6 +2,7 @@
 #include <array>
 #include <vector>
 
+#include "ofxGui.h";
 #include "cell.h"
 
 class GameManager {
@@ -10,10 +11,18 @@ class GameManager {
 
 	int updateInterval_ = 15;
 	int generation_     = 0;
-	bool isInPlay_      = false;
+	bool isPaused_      = false;
+
+	ofxToggle pauseBtn_;
+	ofxButton randomize_;
+	ofxButton clear_;
+	ofxLabel genLbl_;
+	ofxPanel settingPnl_;
 
 public:
+	
 	void setup();
+	void setupGui();
 	/**
 	 * @brief Pause the game, but still allow the player to interact
 	 */
@@ -88,5 +97,8 @@ public:
 	 * @brief Regenerate the grid so random amounts are alive or dead
 	 */
 	void randomizeGrid();
+	void clearGrid();
+
+	void pauseBtnChanged();
 };
 
