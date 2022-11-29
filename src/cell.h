@@ -5,10 +5,8 @@
 
 class Cell {
 public:
-	bool isLive_ = false;
-	bool markedForUpdate_ = false;
+	bool isLive_, markedForUpdate_;
 	Rect<float> collider_;
-
 	int count_ = 0;
 
 	enum stateColor {
@@ -26,8 +24,17 @@ public:
 	 */
 	void setupPixel(const int& x, const int& y);
 	void drawNeighbours(); // DEBUG
+	/**
+	 * @brief toggles the status of isLive_ based on if markedForUpdate_ is true
+	 */
 	void updateCell();
 
+	/**
+	 * @brief Checks to see if the click event was inside of this cell.
+	 * @param x Where the mouse was clicked on a horizontal axis
+	 * @param y Where the mouse was clicked on a vertical axis
+	 * @return If the click was inside of this cell.
+	 */
 	bool wasClickInside(int x, int y);
 
 private:
