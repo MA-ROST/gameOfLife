@@ -39,9 +39,6 @@ void Cell::setStyle() const
 		ofSetColor(inactive);
 		break;
 	}
-
-	if (testing_) ofSetColor(ofColor::red, 50);
-	
 }
 
 

@@ -13,23 +13,6 @@ void GameManager::pause()
 	else isInPlay_ = true;
 }
 
-void GameManager::showNeighbours(int x, int y)
-{
-	Point<int> coord = getClicked(x, y);
-
-	cells_[coord.x - 1][coord.y - 1].testing_ = isCellLive(coord.x - 1, coord.y - 1);
-	cells_[coord.x - 1][coord.y].testing_ = isCellLive(coord.x - 1, coord.y);
-	cells_[coord.x - 1][coord.y + 1].testing_ = isCellLive(coord.x - 1, coord.y + 1);
-
-	cells_[coord.x][coord.y - 1].testing_ = isCellLive(coord.x, coord.y - 1);
-	// DO NOT CHECK THE SAME SPOT WE ARE ON (row,column) ....
-	cells_[coord.x][coord.y+1].testing_ = isCellLive(coord.x, coord.y+1);
-
-	cells_[coord.x + 1][coord.y - 1].testing_ = isCellLive(coord.x + 1, coord.y - 1);
-	cells_[coord.x + 1][coord.y].testing_ = isCellLive(coord.x + 1, coord.y);
-	cells_[coord.x + 1][coord.y + 1].testing_ = isCellLive(coord.x + 1, coord.y + 1);
-}
-
 void GameManager::drawCells()
 {
 	for (int x = 0; x < Cell::GRID_SIZE; ++x) {

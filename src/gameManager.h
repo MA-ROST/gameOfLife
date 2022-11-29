@@ -12,7 +12,6 @@ class GameManager {
 public:
 	void setup();
 	void pause();
-	void showNeighbours(int x, int y);
 	
 	void drawCells();
 	void updateCells(); // Update the cells after all are checked

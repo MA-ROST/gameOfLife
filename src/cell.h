@@ -6,7 +6,6 @@
 class Cell {
 public:
 	bool isLive_ = false;
-	bool testing_ = false;
 	bool markedForUpdate_ = false;
 	Point<float> pixelSize_, pixelLocation_;
 	Rect<float> collider_;
@@ -27,7 +26,7 @@ public:
 	 * @param y The y index of the vector
 	 */
 	void setupPixel(const int& x, const int& y);
-	void drawNeighbours();
+	void drawNeighbours(); // DEBUG
 	void updateCell();
 
 	bool wasClickInside(int x, int y);
