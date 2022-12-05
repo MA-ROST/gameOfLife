@@ -40,7 +40,7 @@ void ofApp::mouseDragged(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
-    
+    manager.mousePressed(x, y);
 }
 
 //--------------------------------------------------------------

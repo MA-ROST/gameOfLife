@@ -131,16 +131,38 @@ bool GameManager::cellInBound(const int row, const int col)
 	return false;
 }
 
+void GameManager::toggleCell(const Point<int> mouseCoord)
+{
+	if (cellInBound(mouseCoord.x, mouseCoord.y))
+	{
+		if (!wasClickTrue) {
+			cells_[mouseCoord.x][mouseCoord.y].isLive_ = true;
+		}
+		else {
+			cells_[mouseCoord.x][mouseCoord.y].isLive_ = false;
+		}
+	}
+}
+
 void GameManager::mouseDragged(const int x, const int y)
 {
 	const Point<int> mouseCoord = getClicked(x, y);
 	isPaused_ = true;
 
+	
 	if (cellInBound(mouseCoord.x, mouseCoord.y))
 	{
-		cells_[mouseCoord.x][mouseCoord.y].isLive_ = true;
+		toggleCell(mouseCoord);
 	}
+}
 
+void GameManager::mousePressed(int x, int y)
+{
+	const Point<int> mouseCoord = getClicked(x, y);
+	if (cellInBound(mouseCoord.x, mouseCoord.y))
+	{
+		wasClickTrue = cells_[mouseCoord.x][mouseCoord.y].isLive_;
+	}
 }
 
 void GameManager::mouseReleased()

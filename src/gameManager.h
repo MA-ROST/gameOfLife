@@ -13,6 +13,8 @@ class GameManager {
 	int generation_     = 0;
 	bool isPaused_     = true;
 
+	bool wasClickTrue = false;
+
 	ofxToggle menuPauseBtn_;
 	ofxButton randomize_;
 	ofxButton clear_;
@@ -74,6 +76,7 @@ public:
 	 * @return If the cell is in bound
 	 */
 	bool cellInBound(int row, int col);
+	void toggleCell(Point<int> mouseCoord);
 
 	/**
 	 * @brief Runs a drag event where
@@ -81,6 +84,7 @@ public:
 	 * @param y Where the mouse was clicked on a vertical axis
 	 */
 	void mouseDragged(int x, int y);
+	void mousePressed(int x, int y);
 	void mouseReleased();
 	/**
 	 * @brief Determine what cell was clicked
