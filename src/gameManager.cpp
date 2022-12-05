@@ -22,11 +22,6 @@ void GameManager::setupGui()
 	font_.load("arial.ttf", 32);
 }
 
-void GameManager::pause()
-{
-	isPaused_ = isPaused_ ? false : true;
-}
-
 void GameManager::draw()
 {
 	drawCells();
@@ -44,14 +39,14 @@ void GameManager::drawCells()
 	for (int x = 0; x < Cell::GRID_SIZE; ++x) {
 		for (int y = 0; y < Cell::GRID_SIZE; ++y) {
 			cells_[x][y].setupPixel(x, y);
-			if (ofGetFrameNum() % updateInterval_ == 0 && !isPaused_) {
+			if (ofGetFrameNum() % updateInterval_ == 0 && !isPaused_ && !menuPauseBtn_) {
 				cellFollowsRules(x, y);
 			}
 		}
 	}
 	genLbl_.setup(std::to_string(generation_));
 
-	if (ofGetFrameNum() % updateInterval_ == 0 && !isPaused_) {
+	if (ofGetFrameNum() % updateInterval_ == 0 && !isPaused_ && !menuPauseBtn_) {
 		updateCells();
 	}
 }

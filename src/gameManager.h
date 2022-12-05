@@ -23,10 +23,6 @@ public:
 	
 	void setup();
 	void setupGui();
-	/**
-	 * @brief Pause the game, but still allow the player to interact
-	 */
-	void pause();
 
 	void draw();
 
