@@ -17,6 +17,8 @@ class GameManager {
 	ofxToggle menuPauseBtn_;
 	ofxButton randomize_;
 	ofxButton clear_;
+	ofxButton push_;
+	ofxButton pop_;
 	ofxLabel genLbl_;
 	ofxPanel settingPnl_;
 
@@ -97,5 +99,8 @@ public:
 	 */
 	void randomizeGrid();
 	void clearGrid();
+
+	void push();
+	void pop();
 };
 

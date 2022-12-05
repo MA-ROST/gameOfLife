@@ -28,10 +28,16 @@ void GameManager::setupGui()
 	settingPnl_.add(menuPauseBtn_.setup("Pause", true));
 	settingPnl_.add(randomize_.setup("Randomize Grid"));
 	settingPnl_.add(clear_.setup("Clear Grid"));
-	settingPnl_.add(genLbl_.setup(std::to_string(generation_)));
+	
+	settingPnl_.add(push_.setup("Push"));
+	settingPnl_.add(pop_.setup("Pop"));
+	settingPnl_.add(genLbl_.setup("Generation "+std::to_string(generation_)));
 
 	randomize_.addListener(this, &GameManager::randomizeGrid);
 	clear_.addListener(this, &GameManager::clearGrid);
+
+	push_.addListener(this, &GameManager::push);
+	pop_.addListener(this, &GameManager::pop);
 
 	font_.load("arial.ttf", 32);
 }
@@ -220,3 +226,31 @@ void GameManager::push()
 	
 	for (int x = 0; x < Cell::gridSize_; ++x) {
 		Cell tempCell;
+		for (int y = 0; y < Cell::gridSize_; ++y) {
+			tempCell.setupPixel(x, y);
+		}
+		cells_[x].push_back(tempCell);
+	}
+
+	vector<Cell> tempCellArray;
+	for (int x = 0; x < Cell::gridSize_; ++x) {
+		for (int y = 0; y < Cell::gridSize_; ++y) {
+			Cell tempCell;
+			tempCell.setupPixel(x, y);
+			tempCellArray.emplace_back(tempCell);
+		}
+		
+	}
+	cells_.push_back(tempCellArray);
+
+	Cell::gridSize_++;
+}
+
+void GameManager::pop()
+{
+	Cell::gridSize_--;
+	for (int y = 0; y < Cell::gridSize_; ++y) {
+		cells_[y].pop_back();
+	}
+	cells_.pop_back();
+}
