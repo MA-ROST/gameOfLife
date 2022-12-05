@@ -1,5 +1,7 @@
 ﻿#include "cell.h"
 
+int Cell::gridSize_{ 30 };
+
 void Cell::setupPixel(const int& x, const int& y)
 {
 	const Point<float> pixelSize = calculatePixelSize();
@@ -34,8 +36,8 @@ void Cell::setStyle() const
 Point<float> Cell::calculatePixelSize()
 {
 	const Point <float> output{
-		static_cast <float> (ofGetWidth()) / GRID_SIZE,
-		static_cast <float> (ofGetHeight()) / GRID_SIZE
+		static_cast <float> (ofGetWidth()) / gridSize_,
+		static_cast <float> (ofGetHeight()) / gridSize_
 	};
 
 	return output;

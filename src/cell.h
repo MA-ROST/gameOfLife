@@ -14,7 +14,7 @@ public:
 		active = 0
 	};
 
-	static constexpr int GRID_SIZE{ 30 };
+	static int gridSize_;
 
 	/**
 	 * @brief sets up the pixel for drawing, and then draws it

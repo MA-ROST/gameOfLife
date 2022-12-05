@@ -2,9 +2,23 @@
 
 #include <ObjectArray.h>
 
+void GameManager::setupCells()
+{
+	for (int x = 0; x < Cell::gridSize_; ++x) {
+		vector<Cell> tempCellArray;
+		for (int y = 0; y < Cell::gridSize_; ++y) {
+			Cell tempCell;
+			tempCell.setupPixel(x, y);
+			tempCellArray.emplace_back(tempCell);
+		}
+		cells_.push_back(tempCellArray);
+	}
+}
+
 void GameManager::setup()
 {
 	setupGui();
+	setupCells();
 	randomizeGrid();
 }
 
@@ -36,8 +50,8 @@ void GameManager::draw()
 
 void GameManager::drawCells()
 {
-	for (int x = 0; x < Cell::GRID_SIZE; ++x) {
-		for (int y = 0; y < Cell::GRID_SIZE; ++y) {
+	for (int x = 0; x < Cell::gridSize_; ++x) {
+		for (int y = 0; y < Cell::gridSize_; ++y) {
 			cells_[x][y].setupPixel(x, y);
 			if (ofGetFrameNum() % updateInterval_ == 0 && !isPaused_ && !menuPauseBtn_) {
 				cellFollowsRules(x, y);
@@ -114,14 +128,14 @@ int GameManager::countLiveNeighbours(const int row, const int col)
 bool GameManager::rowInBound(const int row)
 {
 	if (row < 0) return false;					// Before first row
-	if (row >= Cell::GRID_SIZE) return false;	// After last row
+	if (row >= Cell::gridSize_) return false;	// After last row
 	return true; // Valid row
 }
 
 bool GameManager::colInBound(const int col)
 {
 	if (col < 0) return false;					// Before first column
-	if (col >= Cell::GRID_SIZE) return false;   // After last column
+	if (col >= Cell::gridSize_) return false;   // After last column
 	return true;                                // Valid row
 }
 
@@ -172,8 +186,8 @@ void GameManager::mouseReleased()
 
 Point<int> GameManager::getClicked(const int x, const int y)
 {
-	for (int a = 0; a < Cell::GRID_SIZE; ++a) {
-		for (int b = 0; b < Cell::GRID_SIZE; ++b) {
+	for (int a = 0; a < Cell::gridSize_; ++a) {
+		for (int b = 0; b < Cell::gridSize_; ++b) {
 			if (cells_[a][b].wasClickInside(x, y)) {
 				return { a,b };
 			}
@@ -200,3 +214,9 @@ void GameManager::clearGrid()
 		}
 	}
 }
+
+void GameManager::push()
+{
+	
+	for (int x = 0; x < Cell::gridSize_; ++x) {
+		Cell tempCell;

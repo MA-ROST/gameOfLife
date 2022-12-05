@@ -2,18 +2,17 @@
 #include <array>
 #include <vector>
 
-#include "ofxGui.h";
+#include "ofxGui.h"
 #include "cell.h"
 
 class GameManager {
-	array<array<Cell, Cell::GRID_SIZE>, Cell::GRID_SIZE> cells_;
+	vector<vector<Cell>> cells_;
 	ofTrueTypeFont font_;
 
 	int updateInterval_ = 15;
 	int generation_     = 0;
 	bool isPaused_     = false;
-
-	bool wasClickTrue_ = false;
+	bool wasClickTrue_ = false; // Used only on click events
 
 	ofxToggle menuPauseBtn_;
 	ofxButton randomize_;
@@ -22,12 +21,11 @@ class GameManager {
 	ofxPanel settingPnl_;
 
 public:
-	
+	void setupCells();
 	void setup();
 	void setupGui();
 
 	void draw();
-
 	/**
 	 * @brief Draw each cell, every 4th frame should run cellFollowsRules();
 	 */
