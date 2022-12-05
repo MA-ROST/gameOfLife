@@ -13,7 +13,6 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-
     manager.draw();
 }
 
@@ -24,7 +23,6 @@ void ofApp::keyPressed(int key) {
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
-    if (key == 32) manager.pause();
     if (key == 13) manager.randomizeGrid();
 }
 

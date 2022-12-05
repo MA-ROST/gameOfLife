@@ -135,7 +135,7 @@ void GameManager::toggleCell(const Point<int> mouseCoord)
 {
 	if (cellInBound(mouseCoord.x, mouseCoord.y))
 	{
-		if (!wasClickTrue) {
+		if (!wasClickTrue_) {
 			cells_[mouseCoord.x][mouseCoord.y].isLive_ = true;
 		}
 		else {
@@ -161,7 +161,7 @@ void GameManager::mousePressed(int x, int y)
 	const Point<int> mouseCoord = getClicked(x, y);
 	if (cellInBound(mouseCoord.x, mouseCoord.y))
 	{
-		wasClickTrue = cells_[mouseCoord.x][mouseCoord.y].isLive_;
+		wasClickTrue_ = cells_[mouseCoord.x][mouseCoord.y].isLive_;
 	}
 }
 

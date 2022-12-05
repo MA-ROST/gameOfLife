@@ -11,9 +11,9 @@ class GameManager {
 
 	int updateInterval_ = 15;
 	int generation_     = 0;
-	bool isPaused_     = true;
+	bool isPaused_     = false;
 
-	bool wasClickTrue = false;
+	bool wasClickTrue_ = false;
 
 	ofxToggle menuPauseBtn_;
 	ofxButton randomize_;
