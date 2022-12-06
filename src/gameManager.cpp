@@ -2,6 +2,13 @@
 
 #include <ObjectArray.h>
 
+void GameManager::setup()
+{
+	setupGui();
+	setupCells();
+	randomizeGrid();
+}
+
 void GameManager::setupCells()
 {
 	for (int x = 0; x < Cell::gridSize_; ++x) {
@@ -13,13 +20,6 @@ void GameManager::setupCells()
 		}
 		cells_.push_back(tempCellArray);
 	}
-}
-
-void GameManager::setup()
-{
-	setupGui();
-	setupCells();
-	randomizeGrid();
 }
 
 void GameManager::setupGui()
@@ -35,7 +35,6 @@ void GameManager::setupGui()
 
 	randomize_.addListener(this, &GameManager::randomizeGrid);
 	clear_.addListener(this, &GameManager::clearGrid);
-
 	push_.addListener(this, &GameManager::push);
 	pop_.addListener(this, &GameManager::pop);
 
@@ -153,14 +152,11 @@ bool GameManager::cellInBound(const int row, const int col)
 
 void GameManager::toggleCell(const Point<int> mouseCoord)
 {
-	if (cellInBound(mouseCoord.x, mouseCoord.y))
-	{
-		if (!wasClickTrue_) {
-			cells_[mouseCoord.x][mouseCoord.y].isLive_ = true;
-		}
-		else {
-			cells_[mouseCoord.x][mouseCoord.y].isLive_ = false;
-		}
+	if (!wasClickTrue_) {
+		cells_[mouseCoord.x][mouseCoord.y].isLive_ = true;
+	}
+	else {
+		cells_[mouseCoord.x][mouseCoord.y].isLive_ = false;
 	}
 }
 
@@ -168,7 +164,6 @@ void GameManager::mouseDragged(const int x, const int y)
 {
 	const Point<int> mouseCoord = getClicked(x, y);
 	isPaused_ = true;
-
 	
 	if (cellInBound(mouseCoord.x, mouseCoord.y))
 	{
@@ -181,6 +176,7 @@ void GameManager::mousePressed(int x, int y)
 	const Point<int> mouseCoord = getClicked(x, y);
 	if (cellInBound(mouseCoord.x, mouseCoord.y))
 	{
+		// Check if the clicked cell was true or not, and reflect it onto wasClickTrue_
 		wasClickTrue_ = cells_[mouseCoord.x][mouseCoord.y].isLive_;
 	}
 }
@@ -223,7 +219,7 @@ void GameManager::clearGrid()
 
 void GameManager::push()
 {
-	
+	// Push onto Rows
 	for (int x = 0; x < Cell::gridSize_; ++x) {
 		Cell tempCell;
 		for (int y = 0; y < Cell::gridSize_; ++y) {
@@ -232,6 +228,7 @@ void GameManager::push()
 		cells_[x].push_back(tempCell);
 	}
 
+	// Push a new column
 	vector<Cell> tempCellArray;
 	for (int x = 0; x < Cell::gridSize_; ++x) {
 		for (int y = 0; y < Cell::gridSize_; ++y) {
@@ -239,7 +236,6 @@ void GameManager::push()
 			tempCell.setupPixel(x, y);
 			tempCellArray.emplace_back(tempCell);
 		}
-		
 	}
 	cells_.push_back(tempCellArray);
 
